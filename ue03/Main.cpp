@@ -61,12 +61,12 @@ void	measuredAccepts3(const Tape t, const NFA* fa, const int iterations);
 
 int main(int argc, char* argv[]) {
 
-	FABuilder* fab = nullptr;
-	DFA* dfa = nullptr;
-	NFA* nfa = nullptr;
-	DFA* dfaOfNfa = nullptr;
-	DFA* minDfaOfNfa = nullptr;
-	DFA* renMinDfaOfNfa = nullptr;
+	FABuilder*	fab = nullptr;
+	DFA*		dfa = nullptr;
+	NFA*		nfa = nullptr;
+	DFA*		dfaOfNfa = nullptr;
+	DFA*		minDfaOfNfa = nullptr;
+	DFA*		renMinDfaOfNfa = nullptr;
 
 	Moore* moore = nullptr;
 
