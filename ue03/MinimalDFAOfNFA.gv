@@ -1,0 +1,48 @@
+digraph finite_state_machine {
+
+  rankdir = LR;
+
+  node [fontname = Arial fontsize = 10 style = filled fillcolor = gray90]
+  "MinimalDFAOfNFA:" [shape = none style = "" fontsize = 12];
+  node [shape = point]; START; // shape for START node
+  node [shape = ellipse peripheries = 2] "A+B+C+FIN+S" "A+B+FIN+S" "A+C+FIN+S" "A+FIN+S" "B+C+FIN+S" "B+FIN+S" "C+FIN+S"; // shape for final nodes
+  node [shape = ellipse peripheries = 1];  // shape for non-final nodes
+  START -> "S";
+
+  "S" -> "A+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "S" -> "B+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "S" -> "C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+S" -> "A+B+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "A+S" -> "A+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+S" -> "A+FIN+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "B+S" -> "A+B+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "B+S" -> "B+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "B+S" -> "B+FIN+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "C+S" -> "A+C+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "C+S" -> "B+C+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "C+S" -> "C+FIN+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+FIN+S" -> "A+B+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "A+FIN+S" -> "A+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+FIN+S" -> "A+FIN+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "A+B+S" -> "A+B+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+B+S" -> "A+B+FIN+S" [label = "a, b" fontname = Arial fontsize = 10]; 
+  "A+C+S" -> "A+B+C+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "A+C+S" -> "A+C+FIN+S" [label = "a, c" fontname = Arial fontsize = 10]; 
+  "B+FIN+S" -> "A+B+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "B+FIN+S" -> "B+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "B+FIN+S" -> "B+FIN+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "B+C+S" -> "A+B+C+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "B+C+S" -> "B+C+FIN+S" [label = "b, c" fontname = Arial fontsize = 10]; 
+  "C+FIN+S" -> "A+C+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "C+FIN+S" -> "B+C+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "C+FIN+S" -> "C+FIN+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+B+FIN+S" -> "A+B+C+S" [label = "c" fontname = Arial fontsize = 10]; 
+  "A+B+FIN+S" -> "A+B+FIN+S" [label = "a, b" fontname = Arial fontsize = 10]; 
+  "A+B+C+S" -> "A+B+C+FIN+S" [label = "a, b, c" fontname = Arial fontsize = 10]; 
+  "A+C+FIN+S" -> "A+B+C+S" [label = "b" fontname = Arial fontsize = 10]; 
+  "A+C+FIN+S" -> "A+C+FIN+S" [label = "a, c" fontname = Arial fontsize = 10]; 
+  "B+C+FIN+S" -> "A+B+C+S" [label = "a" fontname = Arial fontsize = 10]; 
+  "B+C+FIN+S" -> "B+C+FIN+S" [label = "b, c" fontname = Arial fontsize = 10]; 
+  "A+B+C+FIN+S" -> "A+B+C+FIN+S" [label = "a, b, c" fontname = Arial fontsize = 10]; 
+
+}

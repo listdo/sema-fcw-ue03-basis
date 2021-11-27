@@ -133,5 +133,8 @@
     <Text Include="G.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="G3a.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

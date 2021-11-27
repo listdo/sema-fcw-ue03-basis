@@ -45,8 +45,18 @@ using namespace std;
 #include "GrammarBuilder.h"
 
 /* FUNCTION DEFINITIONS */
-FA* faOf(const Grammar* g);
-Grammar* grammarOf(const NFA* nfa);
+FA*			faOf(const Grammar* g);
+Grammar*	grammarOf(const NFA* nfa);
+NFA*		getNFAFromGrammar();
+
+void	three_a();
+void	three_b();
+DFA*	three_c();
+void	three_d();
+
+void	measuredAccepts1(const Tape t, const NFA* fa, const int iterations);
+void	measuredAccepts2(const Tape t, const NFA* fa, const int iterations);
+void	measuredAccepts3(const Tape t, const NFA* fa, const int iterations);
 
 
 int main(int argc, char* argv[]) {
@@ -77,19 +87,44 @@ int main(int argc, char* argv[]) {
 		cout << "faOfGrammar->accepts(\"aab\") = " << faOfGrammar->accepts("aab") << endl;
 		cout << "faOfGrammar->accepts(\"aaacaab\")   = " << faOfGrammar->accepts("aaacaab") << endl;
 
-		vizualizeFA("faOfGrammar", faOfGrammar);
-
+		// TODO
+		// vizualizeFA("faOfGrammar", faOfGrammar);
+		
 		fab = new FABuilder(
 			"-> 0 -> 0 1 | 1 2 \n\
 			 () 1 -> 0 1 | 1 2 \n\
 			 () 2 -> 0 1 | 1 2    ");
-
+		
 		fab->setLambda({ {"0", ' '},
 						 {"1", 'F'},
 						 {"2", 'T'} });
-
+		
+		
 		moore = fab->buildMoore();
 		cout << moore->accepts("1010") << endl;
+
+		fab = new FABuilder();
+
+		fab->setStartState("1").
+			addFinalState("2").
+			addFinalState("3").
+			addFinalState("4").
+			addTransition("1", 'b', "2").
+			addTransition("2", 'b', "2").
+			addTransition("2", 'z', "3").
+			addTransition("3", 'z', "3").
+			addTransition("3", 'b', "4").
+			addTransition("4", 'b', "4").
+			addTransition("4", 'z', "3");
+
+		// z -> d
+		// b -> c
+		fab->setLambda({ {"2", 'c'},
+						 {"3", 'd'},
+						 {"4", 'c'}});
+
+		moore = fab->buildMoore();
+		cout << moore->accepts("bzzb") << endl;
 
 		cout << "1. DFA" << endl;
 		cout << "------" << endl;
@@ -121,7 +156,9 @@ int main(int argc, char* argv[]) {
 		delete fab;
 
 		cout << "dfa:" << endl << *dfa;
-		vizualizeFA("dfa", dfa);
+		
+		// TODO
+		// vizualizeFA("dfa", dfa);
 
 		cout << "dfa->accepts(\"bzb\") = " << dfa->accepts("bzb") << endl;
 		cout << "dfa->accepts(\"z\")   = " << dfa->accepts("z") << endl;
@@ -146,6 +183,11 @@ int main(int argc, char* argv[]) {
 
 		auto grammarOfNfa = grammarOf(nfa);
 		cout << "Grammar of NFA:" << endl << *grammarOfNfa << endl;
+
+		three_a();
+		three_b();
+		three_c();
+		three_d();
 		
 		
 		// TODO  
@@ -174,8 +216,6 @@ int main(int argc, char* argv[]) {
 		//renMinDfaOfNfa = minDfaOfNfa->renamedOf();
 		//cout << "renMinDfaOfNfa:" << endl << *renMinDfaOfNfa;
 		//vizualizeFA("renMinDfaOfNfa", renMinDfaOfNfa);
-
-
 	}
 	catch (const exception& e) {
 		cerr << "EXCEPTION (" << typeid(e).name() << "): " << e.what() << endl;
@@ -244,8 +284,6 @@ FA* faOf(const Grammar* g)
 
 	return nfa;
 }
-
-
 Grammar* grammarOf(const NFA* nfa)
 {
 	const auto		symbolPool = SymbolPool::getInstance();
@@ -283,6 +321,153 @@ Grammar* grammarOf(const NFA* nfa)
 	return grammar;
 }
 
+NFA* getNFAFromGrammar()
+{
+	// USING THE TRANSFORM FUNCTION FROM EARLIER
+	Grammar* g = GrammarBuilder(string("G3a.txt")).buildGrammar();
+	NFA* fa = (NFA*)faOf(g);
+
+	return fa;
+}
+
+void three_a()
+{
+	auto fa = getNFAFromGrammar();
+
+	const string VALID_0 = "aaa";
+	const string VALID_1 = "bbb";
+	const string VALID_2 = "ccc";
+	const string VALID_3 = "abbbccca";
+	const string VALID_4 = "baaacb";
+	const string VALID_5 = "caaabc";
+
+	const string INVALID_0 = "abd";
+	const string INVALID_2 = "cbbbca";
+
+	cout << "ACCEPTS 1" << endl;
+	cout << VALID_0 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_0) << endl;
+	cout << VALID_1 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_1) << endl;
+	cout << VALID_2 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_2) << endl;
+	cout << VALID_3 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_3) << endl;
+	cout << VALID_4 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_4) << endl;
+	cout << VALID_5 << "\t\t Is Valid Tape:\t" << fa->accepts1(VALID_5) << endl;
+	cout << INVALID_0 << "\t\tIs Valid Tape:\t" << fa->accepts1(INVALID_0) << endl;
+	cout << INVALID_2 << "\t\tIs Valid Tape:\t" << fa->accepts1(INVALID_2) << endl;
+	cout << endl;
+
+	cout << "ACCEPTS 2" << endl;
+	cout << VALID_0 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_0) << endl;
+	cout << VALID_1 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_1) << endl;
+	cout << VALID_2 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_2) << endl;
+	cout << VALID_3 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_3) << endl;
+	cout << VALID_4 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_4) << endl;
+	cout << VALID_5 << "\t\t Is Valid Tape:\t" << fa->accepts2(VALID_5) << endl;
+	cout << INVALID_0 << "\t\tIs Valid Tape:\t" << fa->accepts2(INVALID_0) << endl;
+	cout << INVALID_2 << "\t\tIs Valid Tape:\t" << fa->accepts2(INVALID_2) << endl;
+	cout << endl;
+
+	cout << "ACCEPTS 3" << endl;
+	cout << VALID_0 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_0) << endl;
+	cout << VALID_1 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_1) << endl;
+	cout << VALID_2 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_2) << endl;
+	cout << VALID_3 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_3) << endl;
+	cout << VALID_4 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_4) << endl;
+	cout << VALID_5 << "\t\t Is Valid Tape:\t" << fa->accepts3(VALID_5) << endl;
+	cout << INVALID_0 << "\t\tIs Valid Tape:\t" << fa->accepts3(INVALID_0) << endl;
+	cout << INVALID_2 << "\t\tIs Valid Tape:\t" << fa->accepts3(INVALID_2) << endl;
+	cout << endl;
+}
+
+void three_b()
+{
+	auto fa		= getNFAFromGrammar();
+
+	const string VALID_0	= "aaa";
+	const string VALID_1	= "bbb";
+	const string VALID_2	= "ccc";
+	const string VALID_3	= "abbbccca";
+	const string VALID_4	= "baaacb";
+	const string VALID_5	= "caaabc";
+	const string INVALID_0	= "abd";
+	const string INVALID_2	= "cbbbca";
+	const int	 ITERATIONS = 100;
+	
+	clock_t tstart = clock();
+	measuredAccepts1(VALID_0, fa, ITERATIONS);
+	measuredAccepts1(INVALID_0, fa, ITERATIONS);
+
+	clock_t t1 = clock() - tstart;
+	cout << "=== ACCEPTS1 ===" << endl;
+	cout << t1 << "ms for " << ITERATIONS << " Iterations" << endl;
+	cout << t1 / ITERATIONS << "ms Avg. per Iteraion for Accepts1" << endl;
+	cout << endl;
+
+	tstart = clock();
+	measuredAccepts2(VALID_0, fa, ITERATIONS);
+	measuredAccepts2(INVALID_0, fa, ITERATIONS);
+
+	clock_t t2 = clock() - tstart;
+	cout << "=== ACCEPTS2 ===" << endl;
+	cout << t2 << "ms for " << ITERATIONS << " Iterations" << endl;
+	cout << t2 / ITERATIONS << "ms Avg. per Iteraion for Accepts2" << endl;
+	cout << endl;
+
+	tstart = clock();
+	measuredAccepts3(VALID_0, fa, ITERATIONS);
+	measuredAccepts3(INVALID_0, fa, ITERATIONS);
+
+	clock_t t3 = clock() - tstart;
+	cout << "=== ACCEPTS3 ===" << endl;
+	cout << t3 << "ms for " << ITERATIONS << " Iterations" << endl;
+	cout << t3 / ITERATIONS << "ms Avg. per Iteraion for Accepts3" << endl; 
+	cout << endl;
+}
+
+void measuredAccepts1(const Tape t, const NFA* fa, const int iterations)
+{
+	for (int i = 0; i < iterations; i++)
+	{
+		fa->accepts1(t);
+	}
+}
+
+void measuredAccepts2(const Tape t, const NFA* fa, const int iterations)
+{
+	for (int i = 0; i < iterations; i++)
+	{
+		fa->accepts2(t);
+	}
+}
+
+void measuredAccepts3(const Tape t, const NFA* fa, const int iterations)
+{
+	for (int i = 0; i < iterations; i++)
+	{
+		fa->accepts3(t);
+	}
+}
+
+DFA* three_c()
+{
+	auto fa		= getNFAFromGrammar();
+	auto dfa	= fa->dfaOf();
+
+	vizualizeFA("DFAFromNFA", dfa);
+
+	return dfa;
+}
+
+void three_d()
+{
+	DFA* dfa = three_c();
+	auto minimalDFA = dfa->minimalOf();
+
+	vizualizeFA("MinimalDFAOfNFA", minimalDFA);
+	/**
+	* Der aktuelle DFA ist der minimale DFA weil es keinen DFA mit weniger Zuständen gibt!
+	* Kann man sehen wenn man den Code ausführt, beide DFA aus C und D sind gleich!
+	*/
+}
 
 // end of Main.cpp
 //======================================================================

@@ -179,6 +179,7 @@
     <ClInclude Include="Vocabulary.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="G3a.txt" />
     <Text Include="G.txt" />
     <Text Include="IdDFA.txt" />
   </ItemGroup>

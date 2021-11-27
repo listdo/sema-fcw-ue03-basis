@@ -1,0 +1,5 @@
+G(S):
+S -> a S | b S | c S | a A | b B | c C
+A -> a A | b A | c A | a
+B -> a B | b B | c B | b
+C -> a C | b C | c C | c
