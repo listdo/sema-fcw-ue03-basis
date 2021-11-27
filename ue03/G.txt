@@ -1,0 +1,6 @@
+G(S):
+S -> a A | eps
+A -> a B | a A
+B -> b | a C
+C -> c C | a A | c D
+D -> d

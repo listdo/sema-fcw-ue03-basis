@@ -1,0 +1,15 @@
+digraph finite_state_machine {
+
+  rankdir = LR;
+
+  node [fontname = Arial fontsize = 10 style = filled fillcolor = gray90]
+  "dfa:" [shape = none style = "" fontsize = 12];
+  node [shape = point]; START; // shape for START node
+  node [shape = circle peripheries = 2] "R"; // shape for final nodes
+  node [shape = circle peripheries = 1];  // shape for non-final nodes
+  START -> "B";
+
+  "B" -> "R" [label = "b" fontname = Arial fontsize = 10]; 
+  "R" -> "R" [label = "b, z" fontname = Arial fontsize = 10]; 
+
+}

@@ -143,30 +143,43 @@
     <ClCompile Include="DFA.cpp" />
     <ClCompile Include="FA.cpp" />
     <ClCompile Include="FABuilder.cpp" />
+    <ClCompile Include="Grammar.cpp" />
+    <ClCompile Include="GrammarBasics.cpp" />
+    <ClCompile Include="GrammarBuilder.cpp" />
     <ClCompile Include="GraphVizUtil.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MbMatrix.cpp" />
     <ClCompile Include="Moore.cpp" />
     <ClCompile Include="NFA.cpp" />
+    <ClCompile Include="SequenceStuff.cpp" />
     <ClCompile Include="SignalHandling.cpp" />
     <ClCompile Include="StateStuff.cpp" />
+    <ClCompile Include="SymbolStuff.cpp" />
     <ClCompile Include="TapeStuff.cpp" />
+    <ClCompile Include="Vocabulary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeltaStuff.h" />
     <ClInclude Include="DFA.h" />
     <ClInclude Include="FA.h" />
     <ClInclude Include="FABuilder.h" />
+    <ClInclude Include="Grammar.h" />
+    <ClInclude Include="GrammarBasics.h" />
+    <ClInclude Include="GrammarBuilder.h" />
     <ClInclude Include="GraphVizUtil.h" />
     <ClInclude Include="MbMatrix.h" />
     <ClInclude Include="Moore.h" />
     <ClInclude Include="NFA.h" />
     <ClInclude Include="ObjectCounter.h" />
+    <ClInclude Include="SequenceStuff.h" />
     <ClInclude Include="SignalHandling.h" />
     <ClInclude Include="StateStuff.h" />
+    <ClInclude Include="SymbolStuff.h" />
     <ClInclude Include="TapeStuff.h" />
+    <ClInclude Include="Vocabulary.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="G.txt" />
     <Text Include="IdDFA.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

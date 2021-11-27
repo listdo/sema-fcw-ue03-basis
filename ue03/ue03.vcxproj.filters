@@ -51,6 +51,24 @@
     <ClCompile Include="Moore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grammar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GrammarBasics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GrammarBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vocabulary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SequenceStuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolStuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeltaStuff.h">
@@ -89,8 +107,31 @@
     <ClInclude Include="Moore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Grammar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GrammarBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GrammarBasics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SequenceStuff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolStuff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vocabulary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="IdDFA.txt" />
+    <Text Include="IdDFA.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="G.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
